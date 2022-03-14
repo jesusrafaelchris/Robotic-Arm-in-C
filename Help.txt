@@ -1,0 +1,33 @@
+Steps
+
+If avr not found: brew install avr-gcc
+
+if
+Error: Xcode alone is not sufficient on Big Sur.
+Install the Command Line Tools:
+Run xcode-select --install
+
+To run:
+
+avr-gcc -g -Os -mmcu=atmega328p  librobot.c k0000000.c robot.c -o robot.elf
+avr-objcopy  -O ihex  robot.elf  robot.hex
+avrdude  -p atmega328p  -c arduino  -P “insert your port here” -b 115200  -D -U flash:w:robot.hex:i
+
+To find the port:
+ls /dev/*
+
+/dev/disk1s4				/dev/systrace
+/dev/disk1s5				/dev/tty
+/dev/disk1s6				/dev/tty.Bluetooth-Incoming-Port
+/dev/dtrace				/dev/tty.DSDTECHHC-05-DevB
+/dev/dtracehelper			/dev/tty.JBLClip2-CSRGAIA
+/dev/fbt					/dev/tty.UEBOOM2-LWACP-6
+/dev/fsevents				/dev/ttyp0
+/dev/io8log				/dev/ttyp1
+
+Should come up with something like this but say Arduino uno or your USB port 
+
+Eg 
+avrdude  -p atmega328p  -c arduino  -P /dev/tty.arduino -b 115200  -D -U flash:w:robot.hex:i
+
+
